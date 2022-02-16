@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Navbar, ListGroup } from 'react-bootstrap';
 import TestIcon from  "../../images/thunderstorm.png"
 
 
@@ -28,63 +28,86 @@ const LocationPage = () => {
         }
         return forecast
     }
+
+    const tenDayForecast = (hours) =>{
+        let forecast = []
+        for(let i=0;i<hours;i++){
+            forecast.push(
+                <ListGroup.Item className="bg-transparent  border text-light text-center my-1" style={{}}>
+                    
+                    <img style={{"height":"2em"}} src={TestIcon}/>
+                </ListGroup.Item>
+            )
+        }
+        return forecast
+    }
     
     return (
         <Container className="h-100 text-light" fluid style={{
             "backgroundColor":`${backGround}`,
-            "minHeight":"100%",
             'overflowY':'auto'
 
         }}>
-            <Row className="h-50 justify-content-md-center ">
-                <Col className="text-center bg-transparent border m-2  " sm={12} style={{"height":'80%'}} >
-                    <p class="mt-5 display-5" >{location}</p>
-                    <p class="">{condition}</p>
-                    <p class="display-1" >{temp} &deg; </p>
-                </Col>
-                <Row  className="bg-transparent border m-2 justify-content-between"  style={{"height":'10%'}}>
-                    <Col className=" bg-transparent"  sm={6}>
-                        <h4>{
-                        DayOfWeek}  <span className='text-uppercase'>Today</span>
-                        </h4> 
+            <Navbar  className="justify-content-center h-10 border bg-dark" fixed="bottom" >
+                Nav
+            
+            </Navbar>
+            <Row className="justify-content-center " >
+                <Row className="h-50 justify-content-center ">
+                    <Col className="text-center bg-transparent border m-2  " sm={12} style={{"height":'80%'}} >
+                        <p className="mt-5 display-5" >{location}</p>
+                        <p className="">{condition}</p>
+                        <p className="display-1" >{temp} &deg; </p>
                     </Col>
-                    <Col  className="bg-transparent" sm={4}>
-                        {highsNlows.high}    {highsNlows.low}
+                    <Row  className="bg-transparent border m-2 justify-content-between"  style={{"height":'10%'}}>
+                        <Col className=" bg-transparent"  xs={6}>
+                            <p className="text-justify">{
+                            DayOfWeek}  <span className='text-uppercase'>Today</span>
+                            </p> 
+                        </Col>
+                        <Col  className="bg-transparent" xs={4}>
+                            {highsNlows.high}    {highsNlows.low}
+                        </Col>
+                    </Row>
+                </Row>
+                <Row className="justify-content-center  h-25">
+                    <Col className="bg-transparent  m-2" >
+                        <ListGroup horizontal className="h-75" style={{"overflowX":'auto'}}>
+                            {HourlyForecast(10)}
+                        </ListGroup>
                     </Col>
                 </Row>
             </Row>
-            <Row className="justify-content-md-center  h-25">
-                <Col className="bg-transparent  m-2" >
-                    <ListGroup horizontal className="h-75" style={{"overflowY":'auto'}}>
-                        {HourlyForecast(10)}
-                     </ListGroup>
+            <Row className="justify-content-center">
+
+                <Row className="justify-content-center  " style={{}}>
+                    <Col className="bg-transparent border m-2 text-center" sm >
+                    <ListGroup  className="h-100" style={{}}>
+                            {tenDayForecast(10)}
+                    </ListGroup>
+                    </Col>
+                </Row>
+            
+
+            <Row className="justify-content-between " style={{"height":'10%'}}>
+                <Col className=" bg-transparent my-2" xs={5} >
+                    Sunrise: {sun.rise}AM
+                </Col>
+
+                <Col className="bg-transparent my-2 " xs={5} >
+                    Sunset: {sun.set}PM
                 </Col>
             </Row>
 
-            <Row className="justify-content-md-center  h-50">
-                <Col className="bg-transparent border m-2 text-center" sm >
-                    10-Dayy Forecast
+            <Row className="justify-content-between  mb-5 " style={{"height":'10%'}}>
+                <Col className="bg-transparent my-2 "  xs={5} >
+                    Rain: {rain}%
+                </Col>
+
+                <Col className="bg-transparent my-2 " xs={5} >
+                    Humididty: {humidity}%
                 </Col>
             </Row>
-
-            <Row className="justify-content-md-center  " style={{"height":'10%'}}>
-                <Col className=" bg-transparent border m-2" sm={5} >
-                    {sun.rise}AM
-                </Col>
-
-                <Col className="bg-transparent border m-2 " sm={5} >
-                    {sun.set}PM
-                </Col>
-            </Row>
-
-            <Row className="justify-content-md-center  " style={{"height":'10%'}}>
-                <Col className="bg-transparent border m-2" sm={5} >
-                    {rain}%
-                </Col>
-
-                <Col className="bg-transparent border m-2 " sm={5} >
-                    {humidity}%
-                </Col>
             </Row>
         </Container>
     );
