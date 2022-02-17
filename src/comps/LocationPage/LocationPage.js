@@ -1,14 +1,25 @@
 import React, { useState, useEffect,useRef } from 'react';
 import { Container, Row, Collapse,Col, Button, Navbar, ListGroup } from 'react-bootstrap';
-import TestIcon from  "../../images/thunderstorm.png"
+import TestIcon from  "../../images/sun.png"
 
+const daysOfWeek ={
+    1:"Sunday",
+    2:"Monday",
+    3:"Tuesday",
+    4:"Wednesday",
+    5:"Thursday",
+    6:"Friday",
+    7:"Saturday"
+}
+
+const today = daysOfWeek[1];
 
 const LocationPage = () => {
     const [backGround, setBackground] = useState("#202020")
     const [temp, setTemp] = useState(55)
     const [condition, setCondition] = useState("Clear")
     const [location, setLoc] = useState("Smyrna")
-    const [DayOfWeek, setDay] = useState("Thursday")
+    const [DayOfWeek, setDay] = useState(today)
     const [sun, setSun] = useState({"rise":"7:30","set":"7:00"})
     const [highsNlows, setHighsNLows] = useState({"high":65,"low":35})
     const [rain, setRain] = useState(88)
@@ -22,8 +33,8 @@ const LocationPage = () => {
 
     useEffect(() => {
         console.log("Y changed", currentY)
-        if (currentY > 60 ){
-            console.log("collapse")
+        if (currentY > 75 ){
+            console.log("collapse", window.innerWidth)
             setOpen(false )
             
         }
@@ -61,11 +72,12 @@ const LocationPage = () => {
 
     const tenDayForecast = (hours) =>{
         let forecast = []
-        for(let i=0;i<hours;i++){
+        for(let i=1;i<=hours;i++){
             forecast.push(
-                <ListGroup.Item className="bg-transparent  border text-light text-center my-1" style={{}}>
-                    
-                    <img style={{"height":"2em"}} src={TestIcon}/>
+                <ListGroup.Item className="justify-content-between d-flex flex-row bg-transparent  text-light " style={{}}>
+                    <h5 className="w-25  text-start">{daysOfWeek[i>7 ? i-7 : i]} </h5>
+                    <img className="" style={{"height":"3em"}} src={TestIcon}/>
+                    <h5 className="w-25 ">{highsNlows.low}      {highsNlows.high}</h5>
                 </ListGroup.Item>
             )
         }
@@ -73,36 +85,28 @@ const LocationPage = () => {
     }
     
     return (
-        <Container onScroll={onScroll} className="h-100 text-light" fluid style={{
+        <Container onScroll={onScroll} className="h-100 text-light " fluid style={{
             "backgroundColor":`${backGround}`,
-            'overflowY':'auto',
-            position:"fixed"
+            'overflowY':'auto'
 
         }}>
             <Navbar  className="justify-content-between h-10 border bg-dark p-1" fixed="bottom" >
-                
                 {currentY}
-                <Button
-                    onClick={() => setOpen(!open)}
-                    aria-controls="example-collapse-text"
-                    aria-expanded={open}
-                >
-                Toggle
-            </Button>
+               
             
             </Navbar>
-            <Row className="justify-content-center border " >
-                <Col className="text-center bg-dark  m-1  "   sm={12} style={{zIndex:10,"height":currentY<50?'50%':"auto", "position": "fixed"}} >
+            <Row className="justify-content-center  " >
+                <Col className="text-center bg-dark  m-1   "   sm={12} style={{zIndex:10, "position": "fixed"}} >
                     <Row  className="justify-content-center "  >
                             <p className="mt-5 " >
                                 <span className="display-3 " > {location}</span> <br/>
                             <span className="" style={{}}>{condition}</span>
                             </p>
                             
-                            <p className="display-1" style={{"display":currentY<70?'':"none"}} >{temp} &deg; </p>
+                            <p className="display-1" style={{"display":currentY<90?'':"none"}} >{temp} &deg; </p>
                         
                         <Collapse in={open} dimension="height">
-                                <Row id="example-collapse-text"  className="bg-transparent border m-2 justify-content-between"  style={{"height":'10%'}}>
+                                <Row id="example-collapse-text"  className="bg-transparent m-2 justify-content-between"  style={{"height":'10%'}}>
                                     <Col className=" bg-transparent"  xs={6}>
                                         <p className="text-justify">{
                                         DayOfWeek}  <span className='text-uppercase'>Today</span>
@@ -115,7 +119,7 @@ const LocationPage = () => {
                         </Collapse>
                     
                     </Row>
-                    <Row className="justify-content-center border  h-25" >
+                    <Row className="justify-content-center   h-25" >
                         <Col className="bg-transparent  " >
                             <ListGroup horizontal className="" style={{"overflowX":'auto'}}>
                                 {HourlyForecast(10)}
@@ -125,7 +129,7 @@ const LocationPage = () => {
                 </Col>
             </Row>
 
-            <Row className="justify-content-center border " style={{ "marginTop": "60vh", "overflowY":'auto'}}>
+            <Row className="justify-content-center py-3" style={{ "marginTop": "27em", "overflowY":'auto'}}>
 
                 <Row className="justify-content-center  " >
                     <Col className="bg-transparent  m-2 text-center" sm >
