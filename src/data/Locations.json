@@ -1,0 +1,34 @@
+{
+    "smyrna":{
+        "current_temp": 0,
+        "state": "ga",
+        "forecast_hour":[],
+        "forecast_ten":[],
+        "sunrise":"",
+        "sunset":"",
+        "rain":0,
+        "humidity":0
+    },
+    "charlotte":{
+        "current_temp": 0,
+        "state": "nc",
+        "forecast_hour":[],
+        "forecast_ten":[],
+        "sunrise":"",
+        "sunset":"",
+        "rain":0,
+        "humidity":0
+    },
+    "denver":{
+        "current_temp": 0,
+        "state": "co",
+        "forecast_hour":[],
+        "forecast_ten":[],
+        "sunrise":"",
+        "sunset":"",
+        "rain":0,
+        "humidity":0,
+        "coordinates":{"lat":"","long":""}
+    }
+
+}
