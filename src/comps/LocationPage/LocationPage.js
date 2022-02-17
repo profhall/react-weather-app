@@ -7,6 +7,7 @@ import Precipitation from '../Forecasts/precipitation';
 import weather from "../../data/weather.json"
 import Header from './Header';
 import Nav from './Nav';
+import OtherLocs from './OtherLocs';
 
 const daysOfWeek ={
     1:"Sunday",
@@ -31,6 +32,7 @@ const LocationPage = () => {
     const [humidity, setHumid] = useState(25)
     // const [hourlyForecast, setHourlyForecast] = useState({"high":65,"low":35})
     const [open, setOpen] = useState(true);
+    const [locPageOpen, setLocPageOpen] = useState(false);
     const prevScrollY = useRef(0);
     const [goingUp, setGoingUp] = useState(false);
     const [weatherNow, setWeatherNow] = useState("sunny")
@@ -39,6 +41,7 @@ const LocationPage = () => {
 
     useEffect(() => {
         console.log("Y changed", currentY)
+        console.log( locPageOpen)
         if (currentY > 45 ){
             console.log("collapse", window.innerWidth)
             setOpen(false )
@@ -46,7 +49,7 @@ const LocationPage = () => {
         }
         else{setOpen(true)}
         
-      }, [currentY]);
+      }, [currentY,locPageOpen]);
 
     const onScroll = (e) => {
       const currentScrollY = e.target.scrollTop;
@@ -71,19 +74,20 @@ const LocationPage = () => {
             'overflowY':'auto'
 
         }}>
-            <Nav  currentY = {currentY} />
-            <Row className="justify-content-center" style={{}} >
+            <Nav  currentY = {currentY} open={locPageOpen} setLocPageOpen={setLocPageOpen} />
+            <Row className="justify-content-center" style={{"display": locPageOpen ? 'none': ''}} >
                 <Col className="text-center  m-1" sm={12} style={{zIndex:1, "position": "fixed", }} >
                     <Header weather={weather} weatherNow={weatherNow} temp={temp} currentY={currentY} condition={condition} location={location} DayOfWeek={DayOfWeek} highsNlows={highsNlows}/>
                     <Hourly highsNlows={highsNlows}/> 
                 </Col>
             </Row>
 
-            <Row className="justify-content-center py-3" style={{ "marginTop": window.innerWidth > 775 ? "28em":"25em", "overflowY":'auto'}}>
+            <Row className="justify-content-center py-3" style={{ "marginTop": window.innerWidth > 775 ? "28em":"25em", "overflowY":'auto',"display": locPageOpen ? 'none': ''}}>
                 <TenDay day={day} highsNlows={highsNlows}/>
                 <Suntimes sun ={sun}/>
                 <Precipitation rain={rain} humidity={humidity}/>
             </Row>
+            <OtherLocs open={locPageOpen}/>
         </Container>
     );
 };
