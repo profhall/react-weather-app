@@ -2,7 +2,6 @@ import React, {useEffect}from 'react';
 import { Navbar,Button } from 'react-bootstrap';
 
 const Nav = ({currentY,setLocPageOpen,open}) => {
-    
     useEffect(() => {
         console.log("open location changed", open)
       }, [open]);
@@ -19,7 +18,7 @@ const Nav = ({currentY,setLocPageOpen,open}) => {
                 onClick={togglePage}
                 aria-controls="page-collapse"
                 aria-expanded={open}
-                className=""
+                className="bg-transparent btn-dark"
             >
                 Locations
             </Button>
